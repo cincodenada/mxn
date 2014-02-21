@@ -622,8 +622,15 @@ Polyline: {
 
 	hide: function() {
 		this.proprietary_polyline.setVisible(false);
-	}
-	
+	},
+
+	update: function() {
+		this.proprietary_polyline.setOptions({
+			strokeColor: this.color,
+			strokeWeight: this.width,
+			strokeOpacity: this.opacity,
+		});
+	},
 }
 
 });
