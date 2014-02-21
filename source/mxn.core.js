@@ -1355,16 +1355,16 @@ BoundingBox.prototype.toSpan = function() {
  * extend extends the bounding box to include the new point
  */
 BoundingBox.prototype.extend = function(point) {
-	if (this.sw.lat > point.lat) {
+	if (this.sw.lat > point.lat || isNaN(this.sw.lat)) {
 		this.sw.lat = point.lat;
 	}
-	if (this.sw.lon > point.lon) {
+	if (this.sw.lon > point.lon || isNaN(this.sw.lon)) {
 		this.sw.lon = point.lon;
 	}
-	if (this.ne.lat < point.lat) {
+	if (this.ne.lat < point.lat || isNaN(this.ne.lat)) {
 		this.ne.lat = point.lat;
 	}
-	if (this.ne.lon < point.lon) {
+	if (this.ne.lon < point.lon || isNaN(this.ne.lon)) {
 		this.ne.lon = point.lon;
 	}
 	return;
