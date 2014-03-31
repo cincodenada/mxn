@@ -1327,7 +1327,10 @@ BoundingBox.prototype.getNorthEast = function() {
  * @type boolean
  */
 BoundingBox.prototype.isEmpty = function() {
-	return this.ne == this.sw; // is this right? FIXME
+	return (
+        (this.ne.lat == this.sw.lat && this.ne.lon == this.ne.lon)
+        || (isNaN(this.ne.lat) || isNaN(this.ne.lon) || isNaN(this.sw.lat) || isNaN(this.sw.lon))
+    ); // is this right? FIXME
 };
 
 /**
@@ -1337,7 +1340,11 @@ BoundingBox.prototype.isEmpty = function() {
  * @type boolean
  */
 BoundingBox.prototype.contains = function(point){
-	return point.lat >= this.sw.lat && point.lat <= this.ne.lat && point.lon >= this.sw.lon && point.lon <= this.ne.lon;
+	if(point && point.hasOwnProperty('ne')) {
+		return this.contains(point.ne) && this.contains(point.sw);
+	} else {
+		return point.lat >= this.sw.lat && point.lat <= this.ne.lat && point.lon >= this.sw.lon && point.lon <= this.ne.lon;
+	}
 };
 
 /**
@@ -1349,6 +1356,37 @@ BoundingBox.prototype.toSpan = function() {
 	return new LatLonPoint( Math.abs(this.sw.lat - this.ne.lat), Math.abs(this.sw.lon - this.ne.lon) );
 };
 
+/**
+ * getArea returns the area (in square degrees) of the bounding box
+ * @returns a floating-point number with the area
+ * @type double
+ */
+BoundingBox.prototype.getArea = function() {
+    dims = this.toSpan();
+    return dims.lat*dims.lon;
+};
+
+BoundingBox.prototype.getCenter = function() {
+    return new LatLonPoint(
+        (this.ne.lat + this.sw.lat)/2,
+        (this.ne.lon + this.sw.lon)/2
+    );
+}
+
+BoundingBox.prototype.zoom = function(ratio) {
+    center = this.getCenter()
+    halfheight = this.ne.lat - center.lat;
+    halfwidth = this.ne.lon - center.lon;
+
+    this.extend(new LatLonPoint(
+        center.lat + halfheight*ratio,
+        center.lon + halfwidth*ratio
+    ));
+    this.extend(new LatLonPoint(
+        center.lat - halfheight*ratio,
+        center.lon - halfwidth*ratio
+    ));
+}
 
 
 /**
