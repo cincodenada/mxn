@@ -1408,6 +1408,10 @@ BoundingBox.prototype.extend = function(point) {
 	return;
 };
 
+BoundingBox.prototype.reset = function() {
+    this.ne.lat = this.ne.lon = this.sw.lat = this.sw.lon = null;
+}
+
 //////////////////////////////
 //
 //  Marker
