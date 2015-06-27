@@ -378,6 +378,17 @@ Polyline: {
 		} else {
 			return true;
 		}
+	},
+
+	update: function() {
+		// TODO: I would like to not duplicate this
+		// but a helper function didn't seem to register
+		this.proprietary_polyline.setStyle({
+			color: this.color || '#000000',
+			opacity: this.opacity || 1.0, 
+			weight: this.width || 3,
+			fillColor: this.fillColor || '#000000'
+		});
 	}
 }
 
