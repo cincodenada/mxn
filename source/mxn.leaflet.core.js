@@ -268,29 +268,29 @@ Marker: {
 		if (me.iconUrl || me.iconSize || me.iconAnchor || me.iconShadowUrl || me.iconShadowSize) {
 			var thisIcon = L.Icon;
 			if (me.iconUrl) {
-				thisIcon = thisIcon.extend({
+				thisIcon = thisIcon.extend({options: {
 					iconUrl: me.iconUrl
-				});
+				}});
 			}
 			if (me.iconSize) {
-				thisIcon = thisIcon.extend({
+				thisIcon = thisIcon.extend({options: {
 					iconSize: new L.Point(me.iconSize[0], me.iconSize[1])
-				});
+				}});
 			}
 			if (me.iconAnchor) {
-				thisIcon = thisIcon.extend({
+				thisIcon = thisIcon.extend({options: {
 					iconAnchor: new L.Point(me.iconAnchor[0], me.iconAnchor[1])
-				});
+				}});
 			}
 			if (me.iconShadowUrl) {
-				thisIcon = thisIcon.extend({
+				thisIcon = thisIcon.extend({options: {
 					shadowUrl: me.iconShadowUrl
-				});
+				}});
 			}
 			if (me.iconShadowSize) {
-				thisIcon = thisIcon.extend({
+				thisIcon = thisIcon.extend({options: {
 					shadowSize: new L.Point(me.iconShadowSize[0], me.iconShadowSize[1])
-				});
+				}});
 			}
 			var iconObj = new thisIcon();
 			marker = new L.Marker(
